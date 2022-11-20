@@ -4,8 +4,9 @@ const {signToken} = require('../utils/auth');
 
 const resolvers = {
     Query: {
-        async me(_, {_id}) {
-            return User.findOne(_id);
+        async me(_, {_id}, context) {
+            if (context.user) return User.findOne({_id: context.user._id});
+            throw new AuthenticationError("You need to be logged in!")
         }
     },
     Mutation: {

@@ -5,6 +5,7 @@ import {removeBookId} from '../utils/localStorage';
 import {useMutation, useQuery} from "@apollo/client";
 import {GET_ME} from "../utils/queries";
 import {REMOVE_BOOK} from "../utils/mutations";
+import {useParams} from "react-router-dom";
 
 const SavedBooks = () => {
     // const [userData, setUserData] = useState({});
@@ -65,6 +66,15 @@ const SavedBooks = () => {
         return <h2>LOADING...</h2>;
     }
 
+    if (!userData?.username) {
+        return (
+            <h4>
+                You need to be logged in to see your profile page. Use the navigation
+                links above to sign up or log in!
+            </h4>
+        );
+    }
+    console.log(userData);
     return (
         <>
             <Jumbotron fluid className='text-light bg-dark'>
