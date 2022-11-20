@@ -24,7 +24,9 @@ const resolvers = {
             return {token, user};
         },
         async addUser(_, args) {
-            return await User.create(args);
+            const user = await User.create(args);
+            const token = signToken(user);
+            return { token, user };
         },
         async saveBook(_, {_id, book}, context) {
             if (context.user) {
