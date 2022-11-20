@@ -66,9 +66,9 @@ const SearchBooks = () => {
         }
 
         try {
-            console.log("adding book")
+            console.log(bookToSave);
             const book = await saveBook({
-                variables: {bookId: bookToSave.bookId}
+                variables: {...bookToSave}
             }); // Replace this
 
             if (!book) {

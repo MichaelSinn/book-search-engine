@@ -29,13 +29,14 @@ const resolvers = {
             const token = signToken(user);
             return { token, user };
         },
-        async saveBook(_, {_id, book}, context) {
+        async saveBook(_, args, context) {
             if (context.user) {
-                return User.findOneAndUpdate(
-                    {_id: _id},
-                    {$addToSet: {savedBooks: book}},
+                const user = await User.findOneAndUpdate(
+                    {_id: context.user._id},
+                    {$addToSet: {savedBooks: args}},
                     {new: true, runValidators: true}
                 );
+                return user;
             }
         },
         async removeBook(_, {_id, bookId}, context) {
