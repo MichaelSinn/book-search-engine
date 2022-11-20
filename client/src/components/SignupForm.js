@@ -14,7 +14,7 @@ const SignupForm = () => {
     // set state for alert
     const [showAlert, setShowAlert] = useState(false);
 
-    const [addUser, {error}] = useMutation(ADD_USER);
+    const [addUser, {error, data}] = useMutation(ADD_USER);
 
     const handleInputChange = (event) => {
         const {name, value} = event.target;
@@ -26,20 +26,22 @@ const SignupForm = () => {
 
         // check if form has everything (as per react-bootstrap docs)
         const form = event.currentTarget;
+        console.log(form);
         if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
+            console.error("Form is invalid");
         }
 
         try {
             // const response = await createUser(userFormData);
             const {data} = await addUser({
-                variables: {userFormData}
+                variables: {...userFormData}
             });
             const {token, user} = data;
-            console.log(user);
             Auth.login(token);
         } catch (err) {
+            console.log("idk")
             console.error(err);
             setShowAlert(true);
         }
