@@ -4,7 +4,7 @@ const {signToken} = require('../utils/auth');
 
 const resolvers = {
     Query: {
-        async me(_, {_id}, context) {
+        async me(parent, args, context) {
             if (context.user) return User.findOne({_id: context.user._id});
             throw new AuthenticationError("You need to be logged in!")
         }
@@ -39,10 +39,10 @@ const resolvers = {
                 return user;
             }
         },
-        async removeBook(_, {_id, bookId}, context) {
+        async removeBook(_, {bookId}, context) {
             if (context.user) {
                 return User.findOneAndUpdate(
-                    {_id: _id},
+                    {_id: context.user._id},
                     {$pull: {savedBooks: {bookId: bookId}}},
                     {new: true}
                 );
