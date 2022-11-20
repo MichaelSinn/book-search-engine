@@ -4,7 +4,7 @@ const {signToken} = require('../utils/auth');
 
 const resolvers = {
     Query: {
-        async getSingleUser(_, {_id}) {
+        async me(_, {_id}) {
             return User.findOne(_id);
         }
     },
@@ -23,7 +23,7 @@ const resolvers = {
             const token = signToken(user);
             return {token, user};
         },
-        async createUser(_, args) {
+        async addUser(_, args) {
             return await User.create(args);
         },
         async saveBook(_, {_id, book}, context) {
@@ -35,7 +35,7 @@ const resolvers = {
                 );
             }
         },
-        async deleteBook(_, {_id, bookId}, context) {
+        async removeBook(_, {_id, bookId}, context) {
             if (context.user) {
                 return User.findOneAndUpdate(
                     {_id: _id},
