@@ -6,7 +6,9 @@ const resolvers = {
     Query: {
         async getSingleUser(_, {_id}) {
             return User.findOne(_id);
-        },
+        }
+    },
+    Mutation: {
         async login(_, {email, password}) {
             const user = await User.findOne({email});
             if (!user) {
@@ -21,8 +23,6 @@ const resolvers = {
             const token = signToken(user);
             return {token, user};
         },
-    },
-    Mutation: {
         async createUser(_, args) {
             return await User.create(args);
         },
