@@ -8,7 +8,7 @@ import {useMutation} from "@apollo/client";
 import {SAVE_BOOK} from "../utils/mutations";
 
 const SearchBooks = () => {
-    const [saveBook, {error, data}] = useMutation(SAVE_BOOK);
+    const [saveBook] = useMutation(SAVE_BOOK);
     // create state for holding returned google api data
     const [searchedBooks, setSearchedBooks] = useState([]);
     // create state for holding our search field data
@@ -16,6 +16,7 @@ const SearchBooks = () => {
 
     // create state to hold saved bookId values
     const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
+
 
     // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
     // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
@@ -44,7 +45,7 @@ const SearchBooks = () => {
                 authors: book.volumeInfo.authors || ['No author to display'],
                 title: book.volumeInfo.title,
                 description: book.volumeInfo.description,
-                image: book.volumeInfo.imageLinks.smallThumbnail || '',
+                image: book.volumeInfo.imageLinks?.smallThumbnail || '',
             }));
             setSearchedBooks(bookData);
             setSearchInput('');

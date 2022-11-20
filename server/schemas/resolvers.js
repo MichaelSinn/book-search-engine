@@ -38,6 +38,7 @@ const resolvers = {
                 );
                 return user;
             }
+            throw new AuthenticationError('You need to be logged in!');
         },
         async removeBook(_, {bookId}, context) {
             if (context.user) {
