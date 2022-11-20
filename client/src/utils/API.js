@@ -1,4 +1,7 @@
 // route to get logged in user's info (needs the token)
+import {useMutation} from "@apollo/client";
+import {SAVE_BOOK} from "./mutations";
+
 export const getMe = (token) => {
   return fetch('/api/users/me', {
     headers: {
@@ -29,16 +32,16 @@ export const loginUser = (userData) => {
 };
 
 // save book data for a logged in user
-export const saveBook = (bookData, token) => {
-  return fetch('/api/users', {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(bookData),
-  });
-};
+// export const saveBook = (bookData, token) => {
+//   return fetch('/api/users', {
+//     method: 'PUT',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       authorization: `Bearer ${token}`,
+//     },
+//     body: JSON.stringify(bookData),
+//   });
+// };
 
 // remove saved book data for a logged in user
 export const deleteBook = (bookId, token) => {
